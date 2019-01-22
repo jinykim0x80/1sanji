@@ -1,0 +1,3 @@
+cleos -u https://api.kylin.alohaeos.com:443 [command] 
+e.g) cleos -u https://api.kylin.alohaeos.com:443 set contract . . .
+e.g) cleos -u https://api.kylin.alohaeos.com:443 wallet unlock . . .
