@@ -1,26 +1,26 @@
-#include "onesanji.hpp"
+#include "1sanji.hpp"
 void onesanji::addrice(
-		uint64_t order_no, 
-		std::string brand, 
-		std::string kind, 
-		std::string volume, 
-		uint32_t price, 
-		std::string producer, 
-		std::string locate_address,
-		uint32_t insurance_day,
-		uint32_t harvest_day,
-		uint32_t cutting_day,
-		std::string recipient,
-		uint32_t phone_number)
+		uint64_t& order_no, 
+		std::string& brand, 
+		std::string& kind, 
+		std::string& volume, 
+		uint32_t& price, 
+		std::string& producer, 
+		std::string& locate_address,
+		uint32_t& insurance_day,
+		uint32_t& harvest_day,
+		uint32_t& cutting_day,
+		std::string& recipient,
+		uint32_t& phone_number)
 {
-	grice_index rice_gold_table(_self,_self);
-	eosio_assert(rice_gold_table.get_code() == _self, "you don't access");
+	gold_rice gold_rice_table(_self,_self);
+	eosio_assert(gold_rice_table.get_code() == _self, "you don't access");
 	eosio::print("addrice called\n");
-	eosio::print("emplace rice_gold_table\n");
-	auto iter = rice_gold_table.find(order_no);
-	eosio_assert(iter == rice_gold_table.end(), "order_no already exist");
-//	grice_index rice_gold_table(_self,_self);
-	rice_gold_table.emplace(_self, [&](auto& r){
+	eosio::print("emplace gold_rice_table\n");
+	auto iter = gold_rice_table.find(order_no);
+	eosio_assert(iter == gold_rice_table.end(), "order_no already exist");
+//	gold_rice gold_rice_table(_self,_self);
+	gold_rice_table.emplace(_self, [&](auto& r){
 		r.order_no = order_no;
 		r.brand = brand;
 		r.kind = kind;
@@ -36,36 +36,36 @@ void onesanji::addrice(
 	});
 }
 
-void onesanji::delrice(uint64_t order_no, const std::string qrtype/* false = black, true = gold*/){
+void onesanji::delrice(uint64_t& order_no, const std::string& qrtype/* false = black, true = gold*/){
 	eosio_assert(qrtype == "black" || qrtype == "gold", "Invalid qrtype");
 	eosio::print("delrice called\n");
 	if(qrtype == "black"){
 		print("It is gold\n");
 	}
 	else if(qrtype == "gold"){
-		//grice_index rice_gold_table(_self, _self);
+		//gold_rice gold_rice_table(_self, _self);
 		//
-		grice_index rice_gold_table(_self,_self);
-		eosio_assert(rice_gold_table.get_code() == _self, "you don't access");
+		gold_rice gold_rice_table(_self,_self);
+		eosio_assert(gold_rice_table.get_code() == _self, "you don't access");
 
-		auto iter = rice_gold_table.find(order_no);
-		eosio_assert(iter != rice_gold_table.end(), "order_no doen't exist");
-		rice_gold_table.erase(iter);
+		auto iter = gold_rice_table.find(order_no);
+		eosio_assert(iter != gold_rice_table.end(), "order_no doen't exist");
+		gold_rice_table.erase(iter);
 	}
 }
-void onesanji::viewrice(uint64_t order_no, const std::string qrtype /* false = black, true = gold*/){
+void onesanji::viewrice(uint64_t& order_no, const std::string& qrtype /* false = black, true = gold*/){
 	eosio_assert(qrtype == "black" || qrtype == "gold", "Invalid qrtype");
 	eosio::print("viewrice called\n");
 	if(qrtype == "black"){
 
 	}
 	else if(qrtype == "gold"){
-		//grice_index rice_gold_table(_self,_self);
-		//eosio_assert(rice_gold_table.get_code() == "onesanji1234"_n, "you don't access");
-		grice_index rice_gold_table(_self,_self);
+		//gold_rice gold_rice_table(_self,_self);
+		//eosio_assert(gold_rice_table.get_code() == "onesanji1234"_n, "you don't access");
+		gold_rice gold_rice_table(_self,_self);
 		
-		auto iter = rice_gold_table.find(order_no);
-		eosio_assert(iter != rice_gold_table.end(), "order_no not found");
+		auto iter = gold_rice_table.find(order_no);
+		eosio_assert(iter != gold_rice_table.end(), "order_no not found");
 		eosio::print("order_no: ", iter->order_no, "\n");	
 		eosio::print("brand: ", iter->brand, "\n");	
 		eosio::print("volume: ", iter->volume, "\n");	
@@ -83,15 +83,15 @@ void onesanji::viewrice(uint64_t order_no, const std::string qrtype /* false = b
 }
 
 void onesanji::printalltable() {
-	//grice_index rice_gold_table(_self,_self);
-	grice_index rice_gold_table(_self,_self);
-	eosio_assert(rice_gold_table.get_code() == _self, "you don't access");
+	//gold_rice gold_rice_table(_self,_self);
+	gold_rice gold_rice_table(_self,_self);
+	eosio_assert(gold_rice_table.get_code() == _self, "you don't access");
 	eosio::print("pprintalltable called\n");
 	std::vector<uint64_t> primary_keys(0);
-	for(const auto& i : rice_gold_table){
+	for(const auto& i : gold_rice_table){
 		primary_keys.push_back(i.primary_key());	
 	}
-	for(const auto& i : primary_keys){
+	for(auto i : primary_keys){
 		viewrice(i, "gold");		
 	}
 }

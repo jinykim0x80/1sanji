@@ -13,7 +13,7 @@ using contract::contract;
 private:
 	/// abi table 
 
-	struct [[eosio::table]] blackqr{
+	struct [[eosio::table]] black_proof{
 		uint64_t order_no;						// uniquekey
 		std::string brand;					// 브랜드
 		std::string kind;					
@@ -28,9 +28,9 @@ private:
 	
 		uint32_t harvest_day;				// 수확일
 		uint32_t cutting_day;				// 도정일
-		EOSLIB_SERIALIZE(blackqr, (order_no)(brand)(kind)(volume)(price)(producer)(locate_address)(insurance_day)(harvest_day)(cutting_day))
+		EOSLIB_SERIALIZE(black_proof, (order_no)(brand)(kind)(volume)(price)(producer)(locate_address)(insurance_day)(harvest_day)(cutting_day))
 	};
-	struct [[eosio::table]] goldqr{
+	struct [[eosio::table]] gold_proof{
 		uint64_t order_no;						// uniquekey
 		std::string brand;					// 브랜드
 		std::string kind;					
@@ -47,10 +47,11 @@ private:
 
 		auto primary_key() const { return order_no; }	
 		auto get_insurance_day() const { return insurance_day; }
-		EOSLIB_SERIALIZE(goldqr, (order_no)(brand)(kind)(volume)(price)(producer)(locate_address)(insurance_day)(harvest_day)(cutting_day)(recipient)(phone_number))
+		EOSLIB_SERIALIZE(gold_proof, (order_no)(brand)(kind)(volume)(price)(producer)(locate_address)(insurance_day)(harvest_day)(cutting_day)(recipient)(phone_number))
 	};
 
-	typedef eosio::multi_index<"goldqr"_n, goldqr> grice_index;
+	typedef eosio::multi_index<"gold_proof"_n, gold_proof> gold_rice;
+	typedef eosio::multi_index<"black_proof"_n, black_proof> black_rice;
 	//grice_index rice_gold_table;
 	/*
 	void check(){
@@ -61,18 +62,18 @@ public:
 	onesanji(account_name self) : contract(self)/*, rice_gold_table(self, self) */{}
 
 	[[eosio::action]] void addrice(
-		uint64_t order_no, 
-		std::string brand, 
-		std::string kind, 
-		std::string volume, 
-		uint32_t price, 
-		std::string producer, 
-		std::string locate_address,
-		uint32_t insurance_day,
-		uint32_t harvest_day,
-		uint32_t cutting_day,
-		std::string recipient,
-		uint32_t phone_number);
+		uint64_t& order_no, 
+		std::string& brand, 
+		std::string& kind, 
+		std::string& volume, 
+		uint32_t& price, 
+		std::string& producer, 
+		std::string& locate_address,
+		uint32_t& insurance_day,
+		uint32_t& harvest_day,
+		uint32_t& cutting_day,
+		std::string& recipient,
+		uint32_t& phone_number);
 	// for black
 	// /*
 //	[[eosio::action]] void addRice(
@@ -102,10 +103,10 @@ public:
 //		uint32_t /*phone_number*/
 //	); 
 //
-	[[eosio::action]] void delrice(uint64_t/*order_no*/, const std::string /*qrtype*/);
+	[[eosio::action]] void delrice(uint64_t&/*order_no*/, const std::string& /*qrtype*/);
 //	[[eosio::action]] void collectResource();
-	[[eosio::action]] void viewrice(uint64_t /*order_no*/, const std::string /*qrtype*/);
-	[[eosio::action]] void printalltable() ;
+	[[eosio::action]] void viewrice(uint64_t& /*order_no*/, const std::string& /*qrtype*/);
+	[[eosio::action]] void printalltable();
 	/*
 	const int currentDateTime(){
 		timet     now = std::clock();
