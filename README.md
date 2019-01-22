@@ -23,4 +23,9 @@ There is 3step
 
 > Note: Not only https://api.kylin.alohaeos.com:433. Is there more API nodes. find yourself.
 
+## Check CryptoKylin transaction 
+https://kylin.eosx.io/
 
+
+## Reference
+* easy tutorial : https://hackernoon.com/how-to-deploy-and-run-a-smart-contract-on-the-eos-blockchain-from-zero-to-hero-72ca592803ba
