@@ -1,7 +1,7 @@
 #include "1sanji.hpp"
 void onesanji::addrice(
-		const std::string& qrtype,	
 		const uint64_t& order_no, 
+		const std::string& qrtype,	
 		const std::string& brand, 
 		const std::string& kind, 
 		const std::string& volume, 
@@ -125,7 +125,7 @@ void onesanji::viewrice(const std::string& qrtype, const uint64_t& order_no){
 	}
 }
 
-void onesanji::printalltable(const std::string& qrtype) {
+void onesanji::printrice(const std::string& qrtype) {
 	require_auth(_self);
 	std::vector<uint64_t> black_primary_keys(0);
 	std::vector<uint64_t> gold_primary_keys(0);
@@ -167,5 +167,33 @@ void onesanji::printalltable(const std::string& qrtype) {
 	}
 	
 }
-EOSIO_ABI(onesanji, (addrice)(delrice)(viewrice)(printalltable))
+
+void onesanji::collect(){
+	require_auth(_self);
+	std::vector<std::pair<uint64_t, uint32_t>> primary_keys(0);
+	
+	auto today = get_date();
+	// rice black
+	black_rice black_rice_table(_self, _self);
+	for(const auto& i : black_rice_table){
+		primary_keys.push_back(std::make_pair(i.primary_key(), i.get_insurance_day()));	
+	}
+	for(auto& i : primary_keys){
+		if(i.second - today < 0)	
+			delrice("black", i.first);
+	}
+
+	primary_keys.clear();
+	
+	// rice gold
+	gold_rice gold_rice_table(_self, _self);
+	for(const auto& i : gold_rice_table){
+		primary_keys.push_back(std::make_pair(i.primary_key(), i.get_insurance_day()));	
+	}
+	for(auto& i : primary_keys){
+		if(i.second - today < 0)	
+			delrice("gold", i.first);
+	}
+}
+EOSIO_ABI(onesanji, (addrice)(delrice)(viewrice)(printrice)(collect))
 

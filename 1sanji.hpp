@@ -4,8 +4,7 @@
 #include <eosiolib/system.h>
 #include <eosiolib/serialize.hpp>
 #include <chrono>
-#include <time.h>
-// Get current date/time, format is YYYY-MM-DD.HH:mm:ss
+#include <ctime>
 using namespace eosio;
 
 class onesanji : contract {
@@ -54,20 +53,23 @@ private:
 	typedef eosio::multi_index<"black_proof"_n, black_proof> black_rice;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //
-	int get_date() const{									// UTC based.
+	uint32_t get_date() const{									// UTC based.
+		/*
 		time_t t = time(NULL);
 		char       buf[8];									// if we support long term something as wine. it must be changed.
 		struct tm  tstruct = *gmtime(&t);;
 		strftime(buf, sizeof(buf), "%g%m%d", &tstruct);
 		return atoi(buf);
+		*/
+		return 0;
 	}
 
 public:
 	onesanji(account_name self) : contract(self) { /* constructor */  }
 
 	[[eosio::action]] void addrice(
-		const std::string&, /*qrtype*/
 		const uint64_t& /*order_no*/, 
+		const std::string& /*qrtype*/,
 		const std::string& /*brand*/, 
 		const std::string& /*kind*/, 
 		const std::string& /*volume*/, 
@@ -81,9 +83,9 @@ public:
 		const uint32_t& /*phone_number*/);
 
 	[[eosio::action]] void delrice(const std::string& /*qrtype*/, const uint64_t&/*order_no*/);
-//	[[eosio::action]] void collectResource();
 	[[eosio::action]] void viewrice(const std::string& /*qrtype*/, const uint64_t& /*order_no*/);
 	[[eosio::action]] void printrice(const std::string& /*qrtype*/);
+	[[eosio::action]] void collect();
 
 };
 
