@@ -172,7 +172,8 @@ void onesanji::collect(){
 	require_auth(_self);
 	std::vector<std::pair<uint64_t, uint32_t>> primary_keys(0);
 	
-	auto today = get_date();
+	//auto today = datetime();
+	auto today = 0;
 	// rice black
 	black_rice black_rice_table(_self, _self);
 	for(const auto& i : black_rice_table){
@@ -195,5 +196,5 @@ void onesanji::collect(){
 			delrice("gold", i.first);
 	}
 }
-EOSIO_ABI(onesanji, (addrice)(delrice)(viewrice)(printrice)(collect))
+EOSIO_ABI(onesanji, (addrice)(delrice)(viewrice)(printrice)(collect)(fuck))
 

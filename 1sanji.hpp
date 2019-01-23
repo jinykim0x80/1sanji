@@ -3,9 +3,12 @@
 #include <eosiolib/print.hpp>
 #include <eosiolib/system.h>
 #include <eosiolib/serialize.hpp>
-#include <chrono>
+#include <eosiolib/time.hpp>
 #include <ctime>
 using namespace eosio;
+
+// customizing function
+inline microseconds years(int64_t y) { return days(365 * y); }
 
 class onesanji : contract {
 using contract::contract;
@@ -53,18 +56,22 @@ private:
 	typedef eosio::multi_index<"black_proof"_n, black_proof> black_rice;
 //////////////////////////////////////////////////////////////////////////////////////////////
 //
-	uint32_t get_date() const{									// UTC based.
-		/*
-		time_t t = time(NULL);
-		char       buf[8];									// if we support long term something as wine. it must be changed.
-		struct tm  tstruct = *gmtime(&t);;
-		strftime(buf, sizeof(buf), "%g%m%d", &tstruct);
-		return atoi(buf);
-		*/
-		return 0;
-	}
 
 public:
+	[[eosio::action]]
+	void fuck() {									// UTC based.
+		std::time_t t = now();
+		char       buf[8];									// if we support long term something as wine. it must be changed.
+		//strftime_l(buf, sizeof(buf), "%F", gmtime(&t) );
+		//eosio::print(eosio::time_put(&t));
+		/*
+		std::tm  tstruct = *std::gmtime(&t);;
+		istd::localtime
+		std::strftime(buf, sizeof(buf), "%g%m%d", &tstruct);
+		auto fuck = atoi(buf);
+		eosio::print(fuck);
+		*/
+	}
 	onesanji(account_name self) : contract(self) { /* constructor */  }
 
 	[[eosio::action]] void addrice(
