@@ -3,7 +3,7 @@
 #include <eosiolib/print.hpp>
 #include <eosiolib/system.h>
 #include <eosiolib/serialize.hpp>
-
+#include <chrono>
 
 // Get current date/time, format is YYYY-MM-DD.HH:mm:ss
 using namespace eosio;
@@ -61,54 +61,38 @@ private:
 public:
 	onesanji(account_name self) : contract(self)/*, rice_gold_table(self, self) */{}
 
-	[[eosio::action]] void addrice(
-		uint64_t& order_no, 
-		std::string& brand, 
-		std::string& kind, 
-		std::string& volume, 
-		uint32_t& price, 
-		std::string& producer, 
-		std::string& locate_address,
-		uint32_t& insurance_day,
-		uint32_t& harvest_day,
-		uint32_t& cutting_day,
-		std::string& recipient,
-		uint32_t& phone_number);
+	[[eosio::action]] void add_rice(
+		const uint64_t& order_no, 
+		const std::string& brand, 
+		const std::string& kind, 
+		const std::string& volume, 
+		const uint32_t& price, 
+		const std::string& producer, 
+		const std::string& locate_address,
+		const uint32_t& insurance_day,
+		const uint32_t& harvest_day,
+		const uint32_t& cutting_day,
+		const std::string& recipient,
+		const uint32_t& phone_number);
 	// for black
-	// /*
-//	[[eosio::action]] void addRice(
-//		std::string /*order_no*/, 
-//		std::string /*brand*/, 
-//		std::string /*kind*/, 
-//		std::string /*volume*/, 
-//		size_t /*price*/, 
-//		std::string /*producer*/, 
-//		std::string /*locate_address*/,
-//		std::string /*insurance_day*/			// insurance_day casting to uint32_t
-//	);					
-//
-//	// for gold 
-//	[[eosio::action]] void addRice(
-//		std::string /*order_no*/, 
-//		std::string /*brand*/, 
-//		std::string /*kind*/, 
-//		std::string /*volume*/, 
-//		size_t /*price*/, 
-//		std::string /*producer*/, 
-//		std::string /*locate_address*/,
-//		std::string /*insurance_day*/,			// insurance_day casting to uint32_t
-//		std::string /*harvest_day*/,
-//		std::string /*cutting_day*/,
-//		std::string /*recipient*/,
-//		uint32_t /*phone_number*/
-//	); 
-//
-	[[eosio::action]] void delrice(uint64_t&/*order_no*/, const std::string& /*qrtype*/);
+	[[eosio::action]] void add_rice(
+		const uint64_t& /*order_no*/, 
+		const std::string& /*brand*/, 
+		const std::string& /*kind*/, 
+		const std::string& /*volume*/, 
+		const uint32_t& /*price*/, 
+		const std::string& /*producer*/, 
+		const std::string& /*locate_address*/,
+		const uint32_t&/*insurance_day*/			// insurance_day casting to uint32_t
+	);					
+
+	[[eosio::action]] void del_rice(const uint64_t&/*order_no*/, const std::string& /*qrtype*/);
 //	[[eosio::action]] void collectResource();
-	[[eosio::action]] void viewrice(uint64_t& /*order_no*/, const std::string& /*qrtype*/);
-	[[eosio::action]] void printalltable();
+	[[eosio::action]] void view_rice(const uint64_t& /*order_no*/, const std::string& /*qrtype*/);
+	[[eosio::action]] void print_rice_tables(const std::string& /*qrtype*/);
+
 	/*
-	const int currentDateTime(){
+	const uint32_t currentDateTime(){
 		timet     now = std::clock();
 		struct tm  tstruct;
 		char       buf[8];
