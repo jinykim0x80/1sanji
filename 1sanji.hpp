@@ -3,7 +3,6 @@
 #include <eosiolib/print.hpp>
 #include <eosiolib/system.h>
 #include <eosiolib/serialize.hpp>
-#include <chrono>
 
 // Get current date/time, format is YYYY-MM-DD.HH:mm:ss
 using namespace eosio;
@@ -52,55 +51,41 @@ private:
 
 	typedef eosio::multi_index<"gold_proof"_n, gold_proof> gold_rice;
 	typedef eosio::multi_index<"black_proof"_n, black_proof> black_rice;
-	//grice_index rice_gold_table;
-	/*
-	void check(){
-		//eosio_assert(rice_gold_table.get_code() == "tester"_n, "You don't access");
-	}
-	*/
-public:
-	onesanji(account_name self) : contract(self)/*, rice_gold_table(self, self) */{}
 
-	[[eosio::action]] void add_rice(
-		const uint64_t& order_no, 
-		const std::string& brand, 
-		const std::string& kind, 
-		const std::string& volume, 
-		const uint32_t& price, 
-		const std::string& producer, 
-		const std::string& locate_address,
-		const uint32_t& insurance_day,
-		const uint32_t& harvest_day,
-		const uint32_t& cutting_day,
-		const std::string& recipient,
-		const uint32_t& phone_number);
-	// for black
-	[[eosio::action]] void add_rice(
+public:
+	onesanji(account_name self) : contract(self) { /* constructor */  }
+
+	[[eosio::action]] void addrice(
+		const std::string&, /*qrtype*/
 		const uint64_t& /*order_no*/, 
 		const std::string& /*brand*/, 
 		const std::string& /*kind*/, 
 		const std::string& /*volume*/, 
-		const uint32_t& /*price*/, 
+		const uint32_t& price, 
 		const std::string& /*producer*/, 
 		const std::string& /*locate_address*/,
-		const uint32_t&/*insurance_day*/			// insurance_day casting to uint32_t
-	);					
+		const uint32_t& /*insurance_day*/,
+		const uint32_t& /*harvest_day*/,
+		const uint32_t& /*cutting_day*/,
+		const std::string& /*recipient*/,
+		const uint32_t& /*phone_number*/);
 
-	[[eosio::action]] void del_rice(const uint64_t&/*order_no*/, const std::string& /*qrtype*/);
+	[[eosio::action]] void delrice(const std::string& /*qrtype*/, const uint64_t&/*order_no*/);
 //	[[eosio::action]] void collectResource();
-	[[eosio::action]] void view_rice(const uint64_t& /*order_no*/, const std::string& /*qrtype*/);
-	[[eosio::action]] void print_rice_tables(const std::string& /*qrtype*/);
+	[[eosio::action]] void viewrice(const std::string& /*qrtype*/, const uint64_t& /*order_no*/);
+	[[eosio::action]] void printalltable(const std::string& /*qrtype*/);
 
 	/*
-	const uint32_t currentDateTime(){
+	const int currentDateTime(){
 		timet     now = std::clock();
 		struct tm  tstruct;
 		char       buf[8];
 		tstruct = *localtime(&now);
 		strftime(buf, sizeof(buf), "%g%m%d", &tstruct);
-
 		return atoi(buf);
 	}
 	*/
 };
+
+
 
