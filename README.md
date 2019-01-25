@@ -3,9 +3,11 @@ Proof of Agricultural Products origin with Blockchain(EOS smart contract)
 
 ## Test
 This Project use the https://github.com/cryptokylin/CryptoKylin-Testnet and It need **docker**
-> Note: **You must starting docker. check above url.** 
+> Note: **You must start docker. check above url.** 
 
 > cd CryptoKylin-Testnet/fullnode 
+
+> sudo service docker start 
 
 > docker-compose -f docker-compose-kylin-init.yaml up -d
 
